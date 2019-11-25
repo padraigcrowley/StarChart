@@ -81,6 +81,7 @@ public class InputManager : Singleton<GameplayManager>
 				if (hitInfo)
 				{
 					//Debug.Log($"Object Name {hitInfo.transform.gameObject.name}");
+					GameplayManager.Instance.cardTouchProcessed = false;
 					GameplayManager.Instance.lastTouchedGameObject = hitInfo.transform.gameObject;
 					// Here you can check hitInfo to see which collider has been hit, and act appropriately.
 				}
