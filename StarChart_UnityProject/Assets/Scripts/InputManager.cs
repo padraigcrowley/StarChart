@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<GameplayManager>
 {
   private Vector3 startTouchPos, endTouchPos;
   private float minSwipeDistanceThreshold = 1.0f;
@@ -75,7 +75,16 @@ public class InputManager : MonoBehaviour
       case TouchPhase.Ended:
         endTouchPos = touchPosition;
         //Debug.Log("endTouchPos" + endTouchPos);
-        break;
+				Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+				RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+				// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
+				if (hitInfo)
+				{
+					//Debug.Log($"Object Name {hitInfo.transform.gameObject.name}");
+					GameplayManager.Instance.lastTouchedGameObject = hitInfo.transform.gameObject;
+					// Here you can check hitInfo to see which collider has been hit, and act appropriately.
+				}
+				break;
     }
   }
 
