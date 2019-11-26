@@ -10,15 +10,17 @@ public class GameplayManager : Singleton<GameplayManager>
 	public GameObject lastTouchedGameObject;
 	public bool cardTouchProcessed = true;
 	List<int> dealtCardIndexes = new List<int>();
+  int num = 0;
 
-	void Start()
+  void Start()
   {
 		lastTouchedGameObject = null;
 		dealtCardIndexes.Clear();
 		//reshuffle(AllCardFaces);
 		for(int i = 0;i<=5;i++)
 		{
-			//Card card[i] = new Card();
+			Card c = new Card();
+			cards[i] = c;
 			cards[i].cardGameObject = cardsGameObjects[i];
 		}
 	}
@@ -26,20 +28,47 @@ public class GameplayManager : Singleton<GameplayManager>
   // Update is called once peer frame
   void Update()
   {
-		int num;
+		
 		if (lastTouchedGameObject != null && cardTouchProcessed == false)
 		{
 			Debug.Log($"Object Name {lastTouchedGameObject.name}");
 			int i = FindTouchedCardIndex(lastTouchedGameObject);
 			Debug.Log($"Object Name from cards[{i}] : {cards[i].cardGameObject.name}");
-			SpriteRenderer sr = lastTouchedGameObject.GetComponent<SpriteRenderer>();
-			do
+
+			if (cards[i].hidden)
 			{
-				num = Random.Range(1, AllCardFaces.Length);
-			} while (dealtCardIndexes.Contains(num) );
-			dealtCardIndexes.Add(num);
-			sr.sprite = AllCardFaces[num];
-			cardTouchProcessed = true;
+        if (cards[i].cardFaceIndex == -1)
+        {
+          do
+          {
+            num = Random.Range(1, AllCardFaces.Length); //find a cardface not previously used
+          } while (dealtCardIndexes.Contains(num));
+
+          dealtCardIndexes.Add(num);
+          cards[i].cardFaceIndex = num;
+          SpriteRenderer sr = lastTouchedGameObject.GetComponent<SpriteRenderer>();
+          sr.sprite = AllCardFaces[num];
+          cardTouchProcessed = true;
+          cards[i].hidden = false;
+        }
+        else
+        {
+          dealtCardIndexes.Add(cards[i].cardFaceIndex);
+          SpriteRenderer sr = lastTouchedGameObject.GetComponent<SpriteRenderer>();
+          sr.sprite = AllCardFaces[cards[i].cardFaceIndex];
+          cardTouchProcessed = true;
+          cards[i].hidden = false;
+        }
+
+			}
+			else 
+			{
+        dealtCardIndexes.Remove(cards[i].cardFaceIndex);
+        SpriteRenderer sr = lastTouchedGameObject.GetComponent<SpriteRenderer>();
+        sr.sprite = AllCardFaces[0];
+        cards[i].hidden = true;
+        cardTouchProcessed = true;
+      }
 		}
 	}
 
