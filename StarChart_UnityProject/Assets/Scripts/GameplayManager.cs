@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameplayManager : Singleton<GameplayManager>
 {
@@ -12,7 +14,9 @@ public class GameplayManager : Singleton<GameplayManager>
 	public bool cardTouchProcessed = true;
 	List<int> dealtCardIndexes = new List<int>();
   int num = 0;
-  
+  public TextMeshProUGUI StarCountText;
+  public int starCount = 0;
+
 
   void Start()
   {
@@ -26,15 +30,16 @@ public class GameplayManager : Singleton<GameplayManager>
 			cards[i].cardGameObject = cardsGameObjects[i];
       cards[i].cardFace = AllCardFaces[i];
       cards[i].cardBack = cardBack;
-      cards[i].HideCard();
+      //cards[i].HideCard();
     }    
 	}
 
   // Update is called once peer frame
   void Update()
   {
-		
-		if (lastTouchedGameObject != null && cardTouchProcessed == false)
+    StarCountText.text = starCount.ToString();
+
+    if (lastTouchedGameObject != null && cardTouchProcessed == false)
 		{
 			Debug.Log($"Object Name {lastTouchedGameObject.name}");
 			int TouchedCardIndex = FindTouchedCardIndex(lastTouchedGameObject);
@@ -47,7 +52,6 @@ public class GameplayManager : Singleton<GameplayManager>
 			{
         cards[TouchedCardIndex].RevealCard();
         cardTouchProcessed = true;
-
       }
 			else //hide the card 
 			{
