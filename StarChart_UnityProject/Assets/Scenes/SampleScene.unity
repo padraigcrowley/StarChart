@@ -473,7 +473,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343154402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.38, y: 0.3, z: 0}
+  m_LocalPosition: {x: -1.35, y: 0.33, z: 0}
   m_LocalScale: {x: 0.49728, y: 0.49728, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -580,7 +580,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427080565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.32, y: -2.67, z: 0}
+  m_LocalPosition: {x: -1.35, y: -2.7, z: 0}
   m_LocalScale: {x: 0.49728, y: 0.49728, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1114,6 +1114,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 50bbc29f0810469458c7037c6dcbfdaf, type: 3}
   - {fileID: 21300000, guid: d332e0ed7bef97746891439d81264a20, type: 3}
   - {fileID: 21300000, guid: bf32efbb0be741740b76a6c999d64526, type: 3}
+  AllCardFacesIndexes: 
   cardBack: {fileID: 21300000, guid: 702ed87e881abf9468c60184e79aad2a, type: 3}
   cardsGameObjects:
   - {fileID: 1712336424}
@@ -1495,7 +1496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712336424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.38, y: 3.3, z: 0}
+  m_LocalPosition: {x: -1.35, y: 3.28, z: 0}
   m_LocalScale: {x: 0.49728, y: 0.49728, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1561,7 +1562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 399, y: 62.2}
+  m_AnchoredPosition: {x: 399, y: 62.19995}
   m_SizeDelta: {x: 473.1, y: 141.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1908592880

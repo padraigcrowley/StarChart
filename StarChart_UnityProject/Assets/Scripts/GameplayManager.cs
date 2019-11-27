@@ -7,6 +7,7 @@ using TMPro;
 public class GameplayManager : Singleton<GameplayManager>
 {
 	public Sprite[] AllCardFaces;
+  public int[] AllCardFacesIndexes;
   public Sprite cardBack;
 	public GameObject[] cardsGameObjects = new GameObject[6];
 	public Card[] cards = new Card[6];
@@ -20,7 +21,13 @@ public class GameplayManager : Singleton<GameplayManager>
 
   void Start()
   {
-		lastTouchedGameObject = null;
+    int numCardFaces = AllCardFaces.Length;
+    for (int i =0; i<numCardFaces; i++)
+    {
+      AllCardFacesIndexes[i] = i;
+    }
+
+    lastTouchedGameObject = null;
 		dealtCardIndexes.Clear();
 		shuffle(AllCardFaces);
 		for(int i = 0;i<=5;i++)
@@ -31,8 +38,10 @@ public class GameplayManager : Singleton<GameplayManager>
       cards[i].cardFace = AllCardFaces[i];
       cards[i].cardBack = cardBack;
       //cards[i].HideCard();
-    }    
-	}
+    }
+    //PlayerPrefs.SetInt("card01", health);
+    //PlayerPrefs.Save();
+  }
 
   // Update is called once peer frame
   void Update()
