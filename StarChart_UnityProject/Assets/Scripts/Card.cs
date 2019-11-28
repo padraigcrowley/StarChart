@@ -6,7 +6,8 @@ public class Card
 {
 	public GameObject cardGameObject;
 	public Sprite cardFace;
-  public int cardFaceIndex = -1;
+  public int cardFaceIndex = -1; //which of all the possible card faces it uses
+  public int cardNumber =-1; // which of the actual 6 assigned cards it is
 	public Sprite cardBack;
 	public bool hidden = true;
   bool cardShrinkingCompleted = false;
@@ -25,6 +26,18 @@ public class Card
     cardShrinkingCompleted = false;    
     StaticCoroutine.StartCoroutine(FlipCard(.5f, cardFace));   
     hidden = false;
+    PlayerPrefs.SetInt("card"+cardNumber+"Hidden", 0);
+    PlayerPrefs.Save();
+    GameplayManager.Instance.starCount++;
+  }
+
+  public void ShowCard() //no slow reveal
+  {
+    SpriteRenderer sr = cardGameObject.GetComponent<SpriteRenderer>();
+    sr.sprite = cardFace;
+    hidden = false;
+    PlayerPrefs.SetInt("card" + cardNumber + "Hidden", 0);
+    PlayerPrefs.Save();
     GameplayManager.Instance.starCount++;
   }
 
@@ -35,6 +48,8 @@ public class Card
     //sr.sprite = GameplayManager.Instance.cardBack;
     StaticCoroutine.StartCoroutine(FlipCard(.15f, cardBack));
     hidden = true;
+    PlayerPrefs.SetInt("card" + cardNumber + "Hidden", 1);
+    PlayerPrefs.Save();
     GameplayManager.Instance.starCount--;
   }
 

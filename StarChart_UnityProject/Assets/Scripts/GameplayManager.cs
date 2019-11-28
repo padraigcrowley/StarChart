@@ -24,34 +24,41 @@ public class GameplayManager : Singleton<GameplayManager>
 
   void Start()
   {
-    firstTimePlay = PlayerPrefs.GetInt("firstTimePlay");
+    //PlayerPrefs.DeleteAll(); // test code - delete me
+    
+    firstTimePlay = PlayerPrefs.GetInt("firstTimePlay",1);
+    print($"firstTimePlay = {firstTimePlay}");
+
     if (firstTimePlay==1)
     {
+      print("First time playing!");
       RandomizeAndAssignCards();
       SaveAssignedCards();
+            
+      for (int i = 0; i <= 5; i++)
+      {
+        Card c = new Card();
+        cards[i] = c;
+        cards[i].cardGameObject = cardsGameObjects[i];
+        cards[i].cardFace = AllCardFaces[dealtCardIndexes[i]];
+        cards[i].cardFaceIndex = dealtCardIndexes[i];
+        cards[i].cardNumber = i;
+        cards[i].cardBack = cardBack;
+        //cards[i].HideCard();
+      }
+      
       firstTimePlay = 0;
       PlayerPrefs.SetInt("firstTimePlay", 0);
       PlayerPrefs.Save();
     }
     else
     {
+      print("NOT first time playing!");
       LoadAssignedCards();
     }
         
     lastTouchedGameObject = null;
-		//dealtCardIndexes.Clear();
-				
-    for(int i = 0;i<=5;i++)
-		{
-			Card c = new Card();
-			cards[i] = c;
-			cards[i].cardGameObject = cardsGameObjects[i];
-      cards[i].cardFace = AllCardFaces[dealtCardIndexes[i]];
-      cards[i].cardBack = cardBack;
-      //cards[i].HideCard();
-    }
-    //PlayerPrefs.SetInt("card01", health);
-    //PlayerPrefs.Save();
+		
   }
 
   // Update is called once peer frame
@@ -70,7 +77,24 @@ public class GameplayManager : Singleton<GameplayManager>
     }
 	}
 
-	int FindTouchedCardIndex(GameObject cardObject)
+  public void Reset()
+  {
+    RandomizeAndAssignCards();
+    SaveAssignedCards();
+
+    for (int i = 0; i <= 5; i++)
+    {
+      cards[i].cardGameObject = cardsGameObjects[i];
+      cards[i].cardFace = AllCardFaces[dealtCardIndexes[i]];
+      cards[i].cardFaceIndex = dealtCardIndexes[i];
+      cards[i].cardNumber = i;
+      cards[i].cardBack = cardBack;
+      if(!cards[i].hidden)  
+        cards[i].HideCard();
+    }
+  }
+
+  int FindTouchedCardIndex(GameObject cardObject)
 	{
 		for (int i = 0; i <= 5; i++)
 		{
@@ -103,19 +127,31 @@ public class GameplayManager : Singleton<GameplayManager>
 
   void LoadAssignedCards()
   {
-    //load the previously saved list
-    dealtCardIndexes[0] = PlayerPrefs.GetInt("card0");
-    dealtCardIndexes[1] = PlayerPrefs.GetInt("card1");
-    dealtCardIndexes[2] = PlayerPrefs.GetInt("card2");
-    dealtCardIndexes[3] = PlayerPrefs.GetInt("card3");
-    dealtCardIndexes[4] = PlayerPrefs.GetInt("card4");
-    dealtCardIndexes[5] = PlayerPrefs.GetInt("card5");
-    card0Hidden = PlayerPrefs.GetInt("card0Hidden");
-    card1Hidden = PlayerPrefs.GetInt("card1Hidden");
-    card2Hidden = PlayerPrefs.GetInt("card2Hidden");
-    card3Hidden = PlayerPrefs.GetInt("card3Hidden");
-    card4Hidden = PlayerPrefs.GetInt("card4Hidden");
-    card5Hidden = PlayerPrefs.GetInt("card5Hidden");
+
+    for (int i = 0; i <= 5; i++)
+    {
+      dealtCardIndexes.Add(PlayerPrefs.GetInt("card"+i));
+      Card c = new Card();
+      cards[i] = c;
+      cards[i].cardGameObject = cardsGameObjects[i];
+      cards[i].cardFace = AllCardFaces[dealtCardIndexes[i]];
+      cards[i].cardFaceIndex = dealtCardIndexes[i];
+      cards[i].cardNumber = i;
+      cards[i].cardBack = cardBack;
+    }
+    
+    card0Hidden = PlayerPrefs.GetInt("card0Hidden",1);
+    if (card0Hidden == 0) cards[0].RevealCard();
+    card1Hidden = PlayerPrefs.GetInt("card1Hidden",1);
+    if (card1Hidden == 0) cards[1].RevealCard();
+    card2Hidden = PlayerPrefs.GetInt("card2Hidden",1);
+    if (card2Hidden == 0) cards[2].RevealCard();
+    card3Hidden = PlayerPrefs.GetInt("card3Hidden",1);
+    if (card3Hidden == 0) cards[3].RevealCard();
+    card4Hidden = PlayerPrefs.GetInt("card4Hidden",1);
+    if (card4Hidden == 0) cards[4].RevealCard();
+    card5Hidden = PlayerPrefs.GetInt("card5Hidden",1);
+    if (card5Hidden == 0) cards[5].RevealCard();
   }
 
   /*void shuffle(Sprite[] sprites)
