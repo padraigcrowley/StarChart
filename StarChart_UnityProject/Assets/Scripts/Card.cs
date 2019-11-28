@@ -23,9 +23,7 @@ public class Card
   public void RevealCard()
   {
     cardShrinkingCompleted = false;    
-    StaticCoroutine.StartCoroutine(FlipCard(.5f, cardFace));    
-    //StaticCoroutine.StartCoroutine(WaitAction()); //see StaticCoroutine.cs    
-    //StaticCoroutine.StartCoroutine(ScaleOverTime(1f, new Vector3(0.49728f, 0.49728f, 0f)));
+    StaticCoroutine.StartCoroutine(FlipCard(.5f, cardFace));   
     hidden = false;
     GameplayManager.Instance.starCount++;
   }
