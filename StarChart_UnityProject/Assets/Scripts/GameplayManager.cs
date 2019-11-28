@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class GameplayManager : Singleton<GameplayManager>
 {
 	public Sprite[] AllCardFaces;
-  public int[] AllCardFacesIndexes;
   public Sprite cardBack;
 	public GameObject[] cardsGameObjects = new GameObject[6];
 	public Card[] cards = new Card[6];
 	public GameObject lastTouchedGameObject;
 	public bool cardTouchProcessed = true;
 	List<int> dealtCardIndexes = new List<int>();
+  List<int> tempDealtCardIndexes = new List<int>();
   int num = 0;
   public TextMeshProUGUI StarCountText;
   public int starCount = 0;
@@ -21,15 +22,16 @@ public class GameplayManager : Singleton<GameplayManager>
 
   void Start()
   {
-    int numCardFaces = AllCardFaces.Length;
-    for (int i =0; i<numCardFaces; i++)
+    for (int i = 0;i<AllCardFaces.Length;i++)
     {
-      AllCardFacesIndexes[i] = i;
+      tempDealtCardIndexes.Add(i);
     }
+    dealtCardIndexes = tempDealtCardIndexes.OrderBy(x => Random.value).ToList(); // shuffle the list: https://forum.unity.com/threads/clever-way-to-shuffle-a-list-t-in-one-line-of-c-code.241052/
 
     lastTouchedGameObject = null;
-		dealtCardIndexes.Clear();
-		shuffle(AllCardFaces);
+		//dealtCardIndexes.Clear();
+		
+    shuffle(AllCardFaces);
 		for(int i = 0;i<=5;i++)
 		{
 			Card c = new Card();
