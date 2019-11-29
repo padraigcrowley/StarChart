@@ -7,10 +7,11 @@ using System.Linq;
 
 public class GameplayManager : Singleton<GameplayManager>
 {
-	public Sprite[] AllCardFaces;
+  private const int NUMBER_CARDS_TO_DEAL = 6;
+  public Sprite[] AllCardFaces;
   public Sprite cardBack;
 	public GameObject[] cardsGameObjects = new GameObject[6];
-	public Card[] cards = new Card[6];
+	public Card[] cards = new Card[NUMBER_CARDS_TO_DEAL];
 	public GameObject lastTouchedGameObject;
 	public bool cardTouchProcessed = true;
 	List<int> dealtCardIndexes = new List<int>();
@@ -35,7 +36,7 @@ public class GameplayManager : Singleton<GameplayManager>
       RandomizeAndAssignCards();
       SaveAssignedCards();
             
-      for (int i = 0; i <= 5; i++)
+      for (int i = 0; i < NUMBER_CARDS_TO_DEAL; i++)
       {
         Card c = new Card();
         cards[i] = c;
@@ -82,7 +83,7 @@ public class GameplayManager : Singleton<GameplayManager>
     RandomizeAndAssignCards();
     SaveAssignedCards();
 
-    for (int i = 0; i <= 5; i++)
+    for (int i = 0; i < NUMBER_CARDS_TO_DEAL; i++)
     {
       cards[i].cardGameObject = cardsGameObjects[i];
       cards[i].cardFace = AllCardFaces[dealtCardIndexes[i]];
@@ -96,7 +97,7 @@ public class GameplayManager : Singleton<GameplayManager>
 
   int FindTouchedCardIndex(GameObject cardObject)
 	{
-		for (int i = 0; i <= 5; i++)
+		for (int i = 0; i < NUMBER_CARDS_TO_DEAL; i++)
 		{
 			if (cards[i].cardGameObject == cardObject)
 				return i;
@@ -106,6 +107,9 @@ public class GameplayManager : Singleton<GameplayManager>
 
   private void RandomizeAndAssignCards() 
   {
+
+    tempDealtCardIndexes.Clear();
+    dealtCardIndexes.Clear();
     //put the numbers 0 to [AllCardFaces.Length] into the list
     for (int i = 0; i < AllCardFaces.Length; i++) { tempDealtCardIndexes.Add(i); }
 
@@ -128,7 +132,7 @@ public class GameplayManager : Singleton<GameplayManager>
   void LoadAssignedCards()
   {
 
-    for (int i = 0; i <= 5; i++)
+    for (int i = 0; i < NUMBER_CARDS_TO_DEAL; i++)
     {
       dealtCardIndexes.Add(PlayerPrefs.GetInt("card"+i));
       Card c = new Card();
