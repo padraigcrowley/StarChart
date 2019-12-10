@@ -16,7 +16,12 @@ public class Card
   public void TouchCard()
   {
     if (hidden)
+    {
       RevealCard();
+      Vector3 cardPos = GameplayManager.Instance.cardsGameObjects[cardNumber].transform.position;
+      GameplayManager.Instance.firework.transform.position = new Vector3(cardPos.x, cardPos.y, -5);
+      GameplayManager.Instance.firework.Play();
+    }
     else
       HideCard();
   }
@@ -46,7 +51,7 @@ public class Card
   {
     //SpriteRenderer sr = cardGameObject.GetComponent<SpriteRenderer>();
     //sr.sprite = GameplayManager.Instance.cardBack;
-    StaticCoroutine.StartCoroutine(FlipCard(.15f, cardBack));
+    StaticCoroutine.StartCoroutine(FlipCard(.5f, cardBack));
     hidden = true;
     PlayerPrefs.SetInt("card" + cardNumber + "Hidden", 1);
     PlayerPrefs.Save();

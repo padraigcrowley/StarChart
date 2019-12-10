@@ -21,7 +21,7 @@ public class GameplayManager : Singleton<GameplayManager>
   public int starCount = 0;
   int firstTimePlay = 1;
   int card0Hidden=1, card1Hidden=1, card2Hidden = 1, card3Hidden = 1, card4Hidden = 1, card5Hidden = 1;
-
+  public ParticleSystem firework;
 
   void Start()
   {
